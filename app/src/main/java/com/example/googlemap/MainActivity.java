@@ -15,6 +15,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -34,22 +36,40 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap Map;
-  //  private CurrentLocation currentLocation;
+    private CurrentLocation currentLocation;
     private SearchView searchView;
+    private ImageButton imbLocationCurrent;
     private double lan = 0 , lng = 0;
     private SupportMapFragment mapFragment;
     private Address address;
+    private String locationSearchView = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AnhXa();
+        ClickIcon();
+        mapFragment.getMapAsync(this);
+    }
+    private void AnhXa(){
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.myMap);
+        imbLocationCurrent = (ImageButton) findViewById(R.id.imageButtonLocationCurrent);
         searchView = (SearchView) findViewById(R.id.searchview);
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Map = googleMap;
+       LatLng latLng = new LatLng(lan, lng);
+       Map.addMarker(new MarkerOptions().position(latLng).title(locationSearchView));
+       Map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+       googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+    }
+    private void ClickIcon(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String locationSearchView = searchView.getQuery().toString();
+                locationSearchView = searchView.getQuery().toString();
                 List<Address> addressList = null;
                 if(locationSearchView != null || !locationSearchView.equals("")) {
                     Geocoder geocoder = new Geocoder(MainActivity.this);
@@ -59,33 +79,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         e.printStackTrace();
                     }
                     address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    Map.addMarker(new MarkerOptions().position(latLng).title(locationSearchView));
-                    Map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    lan = address.getLatitude();
+                    lng = address.getLongitude();
+                    onMapReady(Map);
                 }
-                 return false;
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
             }
         });
-        //getCurrentLocation();
-        mapFragment.getMapAsync(this);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-         Map = googleMap;
-//        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-//        googleMapmain.addMarker(new MarkerOptions().position(latLng).title(locationSearchView));
-//        googleMapmain.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng , 10));
-//        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-    }
-    private void initMap(){
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().
-                findFragmentById(R.id.myMap);
-        mapFragment.getMapAsync(this);
+        imbLocationCurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentLocation = new CurrentLocation(getApplicationContext());
+                Location location = currentLocation.getLocation();
+                if(location != null) {
+                    lan = location.getLatitude();
+                    lng = location.getLongitude();
+                }
+                onMapReady(Map);
+            }
+        });
     }
 
 

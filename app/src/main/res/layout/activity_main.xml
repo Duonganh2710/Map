@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,26 +14,46 @@
        android:layout_alignParentStart="true"
        android:layout_alignParentLeft="true"
        android:layout_alignParentTop="true"
-       android:layout_marginStart="-3dp"
-       android:layout_marginLeft="-3dp"
-       android:layout_marginTop="0dp" />
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginStart="4dp"
+       android:layout_marginLeft="4dp"
+       android:layout_marginTop="-1dp"
+       android:layout_marginBottom="-4dp" />
 
    <SearchView
        android:id="@+id/searchview"
-       android:layout_width="315dp"
+       android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignParentStart="true"
        android:layout_alignParentLeft="true"
        android:layout_alignParentTop="true"
-       android:layout_centerHorizontal="true"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
        android:layout_marginStart="46dp"
        android:layout_marginLeft="46dp"
        android:layout_marginTop="28dp"
-       android:iconifiedByDefault="false"
-       android:queryHint="Search..."
+       android:layout_marginEnd="45dp"
+       android:layout_marginRight="45dp"
+       android:background="@drawable/custom_searchview"
        android:elevation="5dp"
+       android:iconifiedByDefault="false"
        android:padding="3dp"
-       android:background="@drawable/custom_searchview"/>
+       android:queryHint="Search..." />
+
+   <ImageButton
+       android:id="@+id/imageButtonLocationCurrent"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
+       android:layout_alignParentBottom="true"
+       android:layout_marginEnd="42dp"
+       android:layout_marginRight="42dp"
+       android:layout_marginBottom="92dp"
+       app:srcCompat="@drawable/locatincurrrent"
+       tools:ignore="VectorDrawableCompat"
+       android:background="@null"/>
 
 
 </RelativeLayout>
