@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SupportMapFragment mapFragment;
     private Address address;
     private String locationSearchView = new String();
+    private MarkerOptions place1 , place2;
+    private Polyline currentPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
         AnhXa();
         ClickIcon();
+        place1 = new MarkerOptions().position(new LatLng(currentLocation.getLocation().getLatitude() , currentLocation.getLocation().getLongitude())).title("Location Current Divice");
+        place2 = new MarkerOptions().position(new LatLng(address.getLatitude() , address.getLongitude())).title(locationSearchView);
+
         mapFragment.getMapAsync(this);
     }
     private void AnhXa(){
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.myMap);
         imbLocationCurrent = (ImageButton) findViewById(R.id.imageButtonLocationCurrent);
         searchView = (SearchView) findViewById(R.id.searchview);
+        currentLocation = new CurrentLocation(getApplicationContext());
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         imbLocationCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentLocation = new CurrentLocation(getApplicationContext());
+
                 Location location = currentLocation.getLocation();
                 if(location != null) {
                     lan = location.getLatitude();

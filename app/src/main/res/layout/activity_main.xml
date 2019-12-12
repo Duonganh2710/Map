@@ -14,12 +14,16 @@
        android:layout_alignParentStart="true"
        android:layout_alignParentLeft="true"
        android:layout_alignParentTop="true"
+       android:layout_alignParentEnd="true"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
-       android:layout_marginStart="4dp"
-       android:layout_marginLeft="4dp"
-       android:layout_marginTop="-1dp"
-       android:layout_marginBottom="-4dp" />
+       android:layout_marginStart="1dp"
+       android:layout_marginLeft="1dp"
+       android:layout_marginTop="-7dp"
+       android:layout_marginEnd="0dp"
+       android:layout_marginBottom="2dp"
+       android:layout_alignParentRight="true"
+       android:layout_marginRight="0dp" />
 
    <SearchView
        android:id="@+id/searchview"
@@ -43,16 +47,32 @@
 
    <ImageButton
        android:id="@+id/imageButtonLocationCurrent"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
+       android:layout_alignParentBottom="true"
+       android:layout_marginEnd="44dp"
+       android:layout_marginRight="44dp"
+       android:layout_marginBottom="90dp"
+       android:background="@null"
+       android:scaleType="fitXY"
+       app:srcCompat="@drawable/ic_location_current__icon"
+       tools:ignore="VectorDrawableCompat" />
+
+   <ImageButton
+       android:id="@+id/imageButton2"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
        android:layout_alignParentEnd="true"
        android:layout_alignParentRight="true"
        android:layout_alignParentBottom="true"
        android:layout_marginEnd="42dp"
        android:layout_marginRight="42dp"
-       android:layout_marginBottom="92dp"
-       app:srcCompat="@drawable/locatincurrrent"
+       android:layout_marginBottom="187dp"
+       app:srcCompat="@drawable/ic_direction"
        tools:ignore="VectorDrawableCompat"
+       android:scaleType="fitXY"
        android:background="@null"/>
 
 
