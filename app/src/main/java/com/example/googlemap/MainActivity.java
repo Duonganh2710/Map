@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -16,9 +17,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,6 +36,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -45,12 +51,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String locationSearchView = new String();
     private MarkerOptions place1 , place2;
     private Polyline currentPolyline;
+    private EditText extOrigin , extdestination;
+    private ImageButton imbDirectionPath ,imdDirectionDialog;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AnhXa();
+        progressBar.setVisibility(View.INVISIBLE);
         ClickIcon();
         place1 = new MarkerOptions().position(new LatLng(currentLocation.getLocation().getLatitude() , currentLocation.getLocation().getLongitude())).title("Location Current Divice");
         place2 = new MarkerOptions().position(new LatLng(address.getLatitude() , address.getLongitude())).title(locationSearchView);
@@ -60,8 +70,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void AnhXa(){
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.myMap);
         imbLocationCurrent = (ImageButton) findViewById(R.id.imageButtonLocationCurrent);
+        extOrigin = (EditText) findViewById(R.id.editTextOrigin);
+        extdestination = (EditText) findViewById(R.id.editTextDestination);
         searchView = (SearchView) findViewById(R.id.searchview);
+        imbDirectionPath = (ImageButton) findViewById(R.id.imageButton);
+        imdDirectionDialog = (ImageButton) findViewById(R.id.imageButtonDirectionDialog);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         currentLocation = new CurrentLocation(getApplicationContext());
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -99,13 +115,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         imbLocationCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Location location = currentLocation.getLocation();
+                progressBar.setVisibility(View.VISIBLE);
                 if(location != null) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     lan = location.getLatitude();
                     lng = location.getLongitude();
                 }
                 onMapReady(Map);
+            }
+        });
+//        imdDirectionDialog.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                DialoDirectionPath();
+//            }
+//        });
+    }
+
+    private void DialoDirectionPath(){
+        Dialog dialog = new Dialog(getApplicationContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.direction);
+        AnhXa();
+        final String origin = extOrigin.getText().toString();
+        final String director = extdestination.getText().toString();
+        if(origin.isEmpty() || director.isEmpty()){
+            Toast.makeText(this , "Please enter full" , Toast.LENGTH_LONG);
+            return;
+        }
+        imbDirectionPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    new DirectionFinder(getApplicationContext() , origin , director).execute();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

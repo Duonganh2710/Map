@@ -9,36 +9,37 @@
    <fragment
        android:id="@+id/myMap"
        android:name="com.google.android.gms.maps.SupportMapFragment"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_width="wrap_content"
+       android:layout_height="730dp"
        android:layout_alignParentStart="true"
        android:layout_alignParentLeft="true"
        android:layout_alignParentTop="true"
        android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
-       android:layout_marginStart="1dp"
-       android:layout_marginLeft="1dp"
-       android:layout_marginTop="-7dp"
-       android:layout_marginEnd="0dp"
-       android:layout_marginBottom="2dp"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="0dp" />
+       android:layout_marginStart="0dp"
+       android:layout_marginLeft="0dp"
+       android:layout_marginTop="0dp"
+       android:layout_marginEnd="1dp"
+       android:layout_marginRight="1dp"
+       android:layout_marginBottom="1dp" />
 
    <SearchView
        android:id="@+id/searchview"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:layout_alignTop="@+id/myMap"
        android:layout_alignParentStart="true"
        android:layout_alignParentLeft="true"
-       android:layout_alignParentTop="true"
        android:layout_alignParentEnd="true"
        android:layout_alignParentRight="true"
-       android:layout_marginStart="46dp"
-       android:layout_marginLeft="46dp"
-       android:layout_marginTop="28dp"
-       android:layout_marginEnd="45dp"
-       android:layout_marginRight="45dp"
+       android:layout_centerHorizontal="true"
+       android:layout_marginStart="48dp"
+       android:layout_marginLeft="48dp"
+       android:layout_marginTop="46dp"
+       android:layout_marginEnd="43dp"
+       android:layout_marginRight="43dp"
        android:background="@drawable/custom_searchview"
        android:elevation="5dp"
        android:iconifiedByDefault="false"
@@ -61,7 +62,7 @@
        tools:ignore="VectorDrawableCompat" />
 
    <ImageButton
-       android:id="@+id/imageButton2"
+       android:id="@+id/imageButtonDirectionDialog"
        android:layout_width="50dp"
        android:layout_height="50dp"
        android:layout_alignParentEnd="true"
@@ -74,6 +75,13 @@
        tools:ignore="VectorDrawableCompat"
        android:scaleType="fitXY"
        android:background="@null"/>
+
+   <ProgressBar
+       android:id="@+id/progressBar"
+       style="?android:attr/progressBarStyle"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerInParent="true" />
 
 
 </RelativeLayout>
